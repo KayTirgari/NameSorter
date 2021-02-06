@@ -15,6 +15,8 @@ namespace NameSorter.Tests
 
         private Mock<IInputFileService> inputFileService;
 
+        private Mock<ILoggingService> loggingService;
+
         private IProcessingService processingService;
 
         [TestInitialize]
@@ -22,10 +24,12 @@ namespace NameSorter.Tests
         {
             sortingService = new Mock<ISortingService>();
             inputFileService = new Mock<IInputFileService>();
-            
+            loggingService = new Mock<ILoggingService>();
+
             processingService = new ProcessingService(
                 sortingService.Object,
-                inputFileService.Object);
+                inputFileService.Object,
+                loggingService.Object);
         }
 
         [TestMethod]
@@ -40,6 +44,10 @@ namespace NameSorter.Tests
 
             inputFileService.Verify(
                 s => s.ReadAsync(It.IsAny<string>()),
+                Times.Once);
+
+            loggingService.Verify(
+                s => s.LogError(It.IsAny<string>()),
                 Times.Once);
 
             sortingService.Verify(
@@ -58,6 +66,10 @@ namespace NameSorter.Tests
 
             inputFileService.Verify(
                 s => s.ReadAsync(It.IsAny<string>()),
+                Times.Once);
+
+            loggingService.Verify(
+                s => s.LogError(It.IsAny<string>()),
                 Times.Once);
 
             sortingService.Verify(
@@ -84,6 +96,10 @@ namespace NameSorter.Tests
 
             inputFileService.Verify(
                 s => s.ReadAsync(It.IsAny<string>()),
+                Times.Once);
+
+            loggingService.Verify(
+                s => s.LogError(It.IsAny<string>()),
                 Times.Once);
 
             sortingService.Verify(
@@ -117,6 +133,10 @@ namespace NameSorter.Tests
 
             inputFileService.Verify(
                 s => s.ReadAsync(It.IsAny<string>()),
+                Times.Once);
+
+            loggingService.Verify(
+                s => s.LogError(It.IsAny<string>()),
                 Times.Once);
 
             sortingService.Verify(
@@ -163,6 +183,10 @@ namespace NameSorter.Tests
             inputFileService.Verify(
                 s => s.WriteAsync(It.IsAny<string>(), It.IsAny<List<NameModel>>()),
                 Times.Once);
+
+            loggingService.Verify(
+                s => s.LogError(It.IsAny<string>()),
+                Times.Never);
         }
     }
 }

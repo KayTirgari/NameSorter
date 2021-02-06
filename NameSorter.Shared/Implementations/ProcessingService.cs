@@ -15,14 +15,18 @@ namespace NameSorter.Shared.Implementations
 
         private readonly IInputFileService inputFileService;
 
+        private readonly ILoggingService loggingService;
+
         #endregion
 
         public ProcessingService(
             ISortingService sortingSrv,
-            IInputFileService inputFileSrv)
+            IInputFileService inputFileSrv,
+            ILoggingService loggingSrv)
         {
             sortingService = sortingSrv;
             inputFileService = inputFileSrv;
+            loggingService = loggingSrv;
         }
 
         public async Task ProcessAsync(string filename)
@@ -33,7 +37,7 @@ namespace NameSorter.Shared.Implementations
                 var names = await inputFileService.ReadAsync(filename);
                 if (names == null || !names.Any())
                 {
-                    DisplayError("The input file does not contain any names");
+                    loggingService.LogError("The input file does not contain any names");
                     return;
                 }
 
@@ -52,8 +56,8 @@ namespace NameSorter.Shared.Implementations
 
                     foreach (var name in invalidNames)
                         invalidNamesStr += " - " + name.ToString() + Environment.NewLine;
-                    
-                    DisplayError(invalidNamesStr);
+
+                    loggingService.LogError(invalidNamesStr);
                     return;
                 }
 
@@ -78,7 +82,7 @@ namespace NameSorter.Shared.Implementations
             }
             catch(Exception ex)
             {
-                DisplayError(ex.Message);
+                loggingService.LogError(ex.Message);
             }
         }
 
@@ -91,13 +95,6 @@ namespace NameSorter.Shared.Implementations
 
             foreach (var name in names)
                 Console.WriteLine(name.ToString());
-        }
-
-        private void DisplayError(string error)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(error);
-            Console.ResetColor();
         }
 
         #endregion

@@ -38,7 +38,8 @@ namespace NameSorter.App
                     services.AddTransient<IInputFileService, InputFileService>()
                             .AddTransient<ISortingService, SortingService>()
                             .AddTransient<IProcessingService, ProcessingService>()
-                            .AddTransient<INameExtractionService, NameExtractionService>());
+                            .AddTransient<INameExtractionService, NameExtractionService>()
+                            .AddTransient<ILoggingService, LoggingService>());
             return host;
         }   
     }
