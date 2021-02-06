@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NameSorter.Shared.Abstractions;
 using NameSorter.Shared.Implementations;
 using NameSorter.Shared.Models;
 using System;
@@ -11,7 +12,7 @@ namespace NameSorter.Tests
     {
         private List<NameModel> unsortedNames;
 
-        private SortingService sortingService;
+        private ISortingService sortingService;
 
         [TestInitialize]
         public void SetUp()

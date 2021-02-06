@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NameSorter.Shared.Abstractions;
 using NameSorter.Shared.Implementations;
 using System;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace NameSorter.Tests
     [TestClass]
     public class NameExtractionServiceTest
     {
-        private NameExtractionService nameExtractionService;
+        private INameExtractionService nameExtractionService;
 
         [TestInitialize]
         public void SetUp()
